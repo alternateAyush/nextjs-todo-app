@@ -1,5 +1,6 @@
 import { prisma } from '@/prisma'
 import Link from 'next/link'
+import TodoItem from "../components/TodoItem"
 
 function getTodos()
 {
@@ -7,6 +8,7 @@ function getTodos()
 }
 
 export default async function Home () {
+  // await prisma.todo.create({data:{title: "test1",complete:false}})
   const todos=await getTodos();
   return (
     <>
@@ -19,7 +21,11 @@ export default async function Home () {
           New
         </Link>
       </header>
-      <ul></ul>
+      <ul className="pl-4">
+        {todos.map(todo=>(
+          <TodoItem key={todo.id} {...todo}/>
+        ))}
+      </ul>
     </>
   )
 }
